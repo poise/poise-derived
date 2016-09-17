@@ -35,3 +35,8 @@ default['f']['value'] = lazy '%{f.one}'
 # This value is changed later.
 default['g']['one'] = '1'
 default['g']['value'] = lazy { node['g']['one'] }
+
+# This template is changed later.
+default['h']['one'] = '1'
+default['h']['two'] = '2'
+default['h']['value'] = lazy 'one %{h.one}'

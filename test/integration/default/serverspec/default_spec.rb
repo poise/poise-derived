@@ -26,6 +26,7 @@ set :backend, :exec
   'e' => '1 2',
   'f' => '2',
   'g' => '2',
+  'h' => 'two 2',
 }.each do |test, value|
   describe file("/test/#{test}") do
     its(:content) { is_expected.to eq value }

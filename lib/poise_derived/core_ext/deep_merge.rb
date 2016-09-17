@@ -46,8 +46,10 @@ module PoiseDerived
         end
       end
 
-      # Kinder, gentler monkey patching.
+      # Kinder, gentler monkey patching. The singleton_class is the important
+      # one since everything in Chef calls these are module methods.
       Chef::Mixin::DeepMerge.prepend(self)
+      Chef::Mixin::DeepMerge.singleton_class.prepend(self)
     end
   end
 end

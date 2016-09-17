@@ -67,6 +67,19 @@ describe PoiseDerived::LazyAttribute do
     it { is_expected.to render_file('/test').with_content('https://example.com/2.0.0') }
   end # /context with an overridden replacement
 
+  context 'with an overriden template' do
+    recipe do
+      node.default['version'] = '1.0.0'
+      node.default['url'] = PoiseDerived::LazyAttribute.new(node, 'https://example.com/%{version}')
+      node.override['url'] = 'https://example.net/%{version}'
+      file '/test' do
+        content node['url']
+      end
+    end
+
+    it { is_expected.to render_file('/test').with_content('https://example.net/1.0.0') }
+  end # /context with an overriden template
+
   context 'with a block' do
     recipe do
       node.default['version'] = '1.0.0'

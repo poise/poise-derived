@@ -14,13 +14,14 @@
 # limitations under the License.
 #
 
-# Late override of some values
+# Late override of some values.
 node.override['f']['one'] = '2'
 node.override['g']['one'] = '2'
+node.override['h']['value'] = 'two %{h.two}'
 
 directory '/test'
 
-('a'..'g').each do |test|
+('a'..'h').each do |test|
   file "/test/#{test}" do
     content node[test]['value']
   end
