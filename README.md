@@ -18,6 +18,13 @@ To create a lazily evaluated node attribute:
 # attributes/default.rb
 default['mycookbook']['version'] = '1.0'
 default['mycookbook']['url'] = lazy 'https://example.com/myapp-%{mycookbook.version}.zip'
+
+# recipes/default.rb
+node.override['mycookbook']['version'] = '2.0'
+
+poise_archive '/srv/myapp' do
+  source node['mycookbook']['url']
+end
 ```
 
 This attribute can now be used anywhere a normal string can be used and will
