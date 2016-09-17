@@ -17,6 +17,42 @@
 require 'spec_helper'
 
 describe PoiseDerived::LazyAttribute do
+  describe 'method delegation' do
+    subject { chef_run.node['url'] }
+
+    context 'with a string' do
+      recipe(subject: false) do
+        node.default['version'] = '1.0.0'
+        node.default['url'] = PoiseDerived::LazyAttribute.new(node, 'https://example.com/%{version}')
+      end
+
+      its(:to_s) { is_expected.to eq 'https://example.com/1.0.0' }
+      its(:inspect) { is_expected.to eq '#<PoiseDerived::LazyAttribute @value="https://example.com/%{version}">' }
+    end # /context with a string
+
+    context 'with a block' do
+      recipe(subject: false) do
+        node.default['version'] = '1.0.0'
+        node.default['url'] = PoiseDerived::LazyAttribute.new(node)  { "https://example.com/#{node['version']}" }
+      end
+
+      its(:to_s) { is_expected.to eq 'https://example.com/1.0.0' }
+      its(:inspect) { is_expected.to eq '#<PoiseDerived::LazyAttribute @value=proc>' }
+    end # /context with a block
+  end # /describe to_s delegation
+
+  context 'with no arguments' do
+    subject { described_class.new(nil) }
+
+    it { expect { subject }.to raise_error ArgumentError }
+  end # /context with no arguments
+
+  context 'with both arguments' do
+    subject { described_class.new(nil, '') { } }
+
+    it { expect { subject }.to raise_error ArgumentError }
+  end # /context with both arguments
+
   context 'with a single replacement' do
     recipe do
       node.default['version'] = '1.0.0'
