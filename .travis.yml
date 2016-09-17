@@ -1,0 +1,40 @@
+sudo: false
+cache: bundler
+language: ruby
+env:
+  global:
+    - secure: DxJdl4xHPBB3mdM2c0qhdjpxEkWuv0vF9MFrrblSjM3VF5kIkkhSRG+zvyJNg2u+zu76XCEvf+pEt2Ltsl7TzY/AdkeyyhEX2JxcPMkAl5KJmssEQPHkkLowTCK4rfVuakCDjkuXRReSdfH3vBSAX1/SqUZelVZjNV4AZcGHykv5WE0hBmOMGuY9mmsZyg7f91vifCGWk+7SexF+jcuqQh7ZKeJiLcERMdS2K568zkOYZyHXaS+31ic5HW3Jfh929+chg0iSCXL7xhCoUFF4K/aUfi/40LVVHAnBVi0NT/79/KbQBKvYYsCPr0Bw4QqVfRuz6Puxf0FWpLmuRdj1gxvHRKJ18PoKXdET+XsORJV+Qs0EXATR+bzqT9hXSJ16DEaJn8Sx4bA9YqDlBSSGwHqlLj3ql78e5UqkG4yHSLPTjz1uDA+56ZadTLliWR6uFna4HSPx8T4z7FSYMqoLS2Z59I3/JhZ/aSlEnW4FVpQW5XXxz1KVFnOHoz9gGHq+uJChFaAM2mq1MlXzbflpnLe3D/2k2daC0ss4dRrE2jplqpDWwjSK4CrXNRjKiiDr/KScgFYPz7wNg1Acq2hbYXx5J/pTi+sSjZjEUtXRTVzutm9KgLNPlz/MmUamd1maK9APhFdlrOTGFF4fXgE5OeVcSz+lF+Zi8qiXxfUFuvQ=
+before_install: gem install bundler
+bundler_args: '--binstubs=$PWD/bin --jobs 3 --retry 3'
+script:
+  - ./bin/rake travis
+matrix:
+  include:
+    - rvm: 2.3.1
+      gemfile: test/gemfiles/chef-12.gemfile
+    - rvm: 2.1.4
+      gemfile: test/gemfiles/chef-12.3.gemfile
+    - rvm: 2.1.6
+      gemfile: test/gemfiles/chef-12.4.gemfile
+    - rvm: 2.1.6
+      gemfile: test/gemfiles/chef-12.5.gemfile
+    - rvm: 2.1.6
+      gemfile: test/gemfiles/chef-12.6.gemfile
+    - rvm: 2.1.6
+      gemfile: test/gemfiles/chef-12.7.gemfile
+    - rvm: 2.1.6
+      gemfile: test/gemfiles/chef-12.8.gemfile
+    - rvm: 2.1.8
+      gemfile: test/gemfiles/chef-12.9.gemfile
+    - rvm: 2.1.8
+      gemfile: test/gemfiles/chef-12.10.gemfile
+    - rvm: 2.1.8
+      gemfile: test/gemfiles/chef-12.11.gemfile
+    - rvm: 2.1.8
+      gemfile: test/gemfiles/chef-12.12.gemfile
+    - rvm: 2.1.9
+      gemfile: test/gemfiles/chef-12.13.gemfile
+    - rvm: 2.3.1
+      gemfile: test/gemfiles/chef-12.14.gemfile
+    - rvm: 2.3.1
+      gemfile: test/gemfiles/master.gemfile
