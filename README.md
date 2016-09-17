@@ -49,6 +49,25 @@ default['mycookbook']['command_options'] = lazy {
 
 If the block returns something other than a string, it will be run through `to_s`.
 
+## Template Overrides
+
+If an attribute's default value is lazy'd, any overrides to it will be treated
+as the string form of a lazy attribute. This allows overriding the template in
+a role, environment, or policy:
+
+```ruby
+# attributes/default.rb
+default['mycookbook']['version'] = '1.0'
+default['mycookbook']['url'] = lazy 'https://example.com/myapp-%{mycookbook.version}.zip'
+
+# recipes/default.rb
+node.override['mycookbook']['url'] = 'https://myapp.com/%{mycookbook.version}.tgz'
+
+poise_archive '/srv/myapp' do
+  source node['mycookbook']['url']
+end
+```
+
 ## Sponsors
 
 Development sponsored by [Bloomberg](http://www.bloomberg.com/company/technology/).
