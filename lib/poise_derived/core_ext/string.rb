@@ -16,27 +16,20 @@
 
 require 'poise_derived/lazy_attribute'
 
-module PoiseDerived
-  module CoreExt
-    # Holding module for the one value I need. Also yay consistency.
-    #
-    # @since 1.0.0
-    # @api private
-    module Module
-      # Used below to fake Module#===
-      EMPTY_STRING = ''.freeze
+
+# Monkeypatch String so that our magic works in case statements. If you're
+# reading this, something has probably gone wrong. I'm so sorry.
+#
+# @since 1.0.0
+# @api private
+class String
+  old_method = method(:===)
+  define_singleton_method(:===) do |obj|
+    if obj.class <= ::PoiseDerived::LazyAttribute
+      true
+    else
+      old_method.call(obj)
     end
   end
 end
 
-class Module
-  old_method = instance_method(:===)
-  define_method(:===) do |obj|
-    orig = old_method.bind(self).call(obj)
-    if obj.class <= PoiseDerived::LazyAttribute
-      orig || self === PoiseDerived::CoreExt::Module::EMPTY_STRING
-    else
-      orig
-    end
-  end
-end

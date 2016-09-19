@@ -77,6 +77,12 @@ module PoiseDerived
       _evaluate.to_s
     end
 
+    # Make sure we implement to_str because that activates the == hack.
+    # @api private
+    def to_str
+      to_s
+    end
+
     # Fake is_a? and kind_of? for params_validate and `_pv_kind_of`.
     # @api private
     def is_a?(klass)
@@ -84,7 +90,15 @@ module PoiseDerived
       klass <= String
     end
 
+    # @api private
+    # @see is_a?
     alias_method :kind_of?, :is_a?
+
+    # Specifically delegate == because not caught by method_missing.
+    # @api private
+    def ==(other)
+      _evaluate == other
+    end
     # !@endgroup
 
     private

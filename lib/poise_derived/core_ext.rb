@@ -15,7 +15,7 @@
 #
 
 require 'poise_derived/core_ext/deep_merge'
-require 'poise_derived/core_ext/module'
+require 'poise_derived/core_ext/string'
 
 
 module PoiseDerived
