@@ -26,7 +26,3 @@ directory '/test'
     content node[test]['value']
   end
 end
-
-file '/foo' do
-  content node['f']['one']
-end
