@@ -68,6 +68,25 @@ poise_archive '/srv/myapp' do
 end
 ```
 
+## Why Do I Need This?
+
+Cookbook attribute files are, at heart, plain Ruby code. This has led many
+cookbook authors to use the naive approach to having the value of one attribute
+be used as part of the value of another:
+
+```ruby
+# attributes/default.rb
+default['mycookbook']['version'] = '1.0'
+default['mycookbook']['url'] = lazy "https://example.com/myapp-#{node['mycookbook']['version']}.zip"
+```
+
+The problem with this is that if a wrapper cookbook wants to change the value
+of `node['mycookbook']['version']`, by the time it sets the new version the URL
+has already been baked so further changes to the version won't affect it. One
+solution here is to never use one attribute in another, but this is often
+ungainly. `poise-derived` provides a middle ground where the interpolation can
+be expressed cleanly and with minimal impact to the recipe code that uses it.
+
 ## Sponsors
 
 Development sponsored by [Bloomberg](http://www.bloomberg.com/company/technology/).
