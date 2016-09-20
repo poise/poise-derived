@@ -40,3 +40,7 @@ default['g']['value'] = lazy { node['g']['one'] }
 default['h']['one'] = '1'
 default['h']['two'] = '2'
 default['h']['value'] = lazy 'one %{h.one}'
+
+default['i']['one'] = '1'
+default['i']['two'] = lazy 'one %{i.one}'
+default['i']['value'] = lazy 'two %{i.two} 2'

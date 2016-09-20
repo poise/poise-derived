@@ -21,7 +21,7 @@ node.override['h']['value'] = 'two %{h.two}'
 
 directory '/test'
 
-('a'..'h').each do |test|
+('a'..'i').each do |test|
   file "/test/#{test}" do
     content node[test]['value']
   end

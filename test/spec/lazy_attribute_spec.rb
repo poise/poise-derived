@@ -133,6 +133,16 @@ describe PoiseDerived::LazyAttribute do
 
       it { is_expected.to eq 'https://example.com/1.0.0' }
     end # /context with a block
+
+    context 'with a double-lazy chain' do
+      recipe(subject: false) do
+        node.default['version'] = '1.0.0'
+        node.default['url_part'] = PoiseDerived::LazyAttribute.new(node, 'https://example.com/%{version}')
+        node.default['url'] = PoiseDerived::LazyAttribute.new(node, '%{url_part}.zip')
+      end
+
+      it { is_expected.to eq 'https://example.com/1.0.0.zip' }
+    end # /context with a double-lazy chain
   end #/ describe evaluation
 
   describe 'use in a resource' do
