@@ -155,4 +155,15 @@ describe PoiseDerived::LazyAttribute do
 
     it { is_expected.to render_file('/test').with_content('content') }
   end # /describe use in a resource
+
+  describe 'use in a remote_file url' do
+    recipe do
+      node.default['url'] = PoiseDerived::LazyAttribute.new(node, 'https://example.com/myapp.zip')
+      remote_file '/test' do
+        source node['url']
+      end
+    end
+
+    it { is_expected.to create_remote_file('/test').with(source: 'https://example.com/myapp.zip') }
+  end # /describe use in a remote_file url
 end
