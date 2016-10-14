@@ -34,7 +34,7 @@ module PoiseDerived
       alias_method(:lazy, :_lazy_attribute)
     end
 
-    # Disable the DSL extension so `node.lazy` will no longer work.
+    # Disable the DSL extension so `node.lazy` will no longer use this DSL.
     #
     # @return [void]
     def self.uninstall

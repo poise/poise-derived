@@ -77,7 +77,7 @@ be used as part of the value of another:
 ```ruby
 # attributes/default.rb
 default['mycookbook']['version'] = '1.0'
-default['mycookbook']['url'] = lazy "https://example.com/myapp-#{node['mycookbook']['version']}.zip"
+default['mycookbook']['url'] = "https://example.com/myapp-#{node['mycookbook']['version']}.zip"
 ```
 
 The problem with this is that if a wrapper cookbook wants to change the value
