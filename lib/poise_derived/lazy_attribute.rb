@@ -101,6 +101,13 @@ module PoiseDerived
     end
     # !@endgroup
 
+    # Don't actually freeze because Chef 13 freezes values in the merged
+    # attribute view.
+    # @api private
+    def freeze
+     self
+    end
+
     private
 
     # Evaluate the lazy attribute.
