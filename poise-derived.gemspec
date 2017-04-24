@@ -26,7 +26,8 @@ Gem::Specification.new do |spec|
   spec.description = 'A Chef cookbook for defining lazily evaluated node attributes.'
   spec.summary = spec.description
   spec.homepage = 'https://github.com/poise/poise-derived'
-  spec.license = 'Apache 2.0'
+  spec.license = 'Apache-2.0'
+  spec.metadata['platform'] = 'any'
 
   spec.files = `git ls-files`.split($/)
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
