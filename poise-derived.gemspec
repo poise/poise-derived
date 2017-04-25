@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.summary = spec.description
   spec.homepage = 'https://github.com/poise/poise-derived'
   spec.license = 'Apache-2.0'
-  spec.metadata['platform'] = 'any'
+  spec.metadata['platforms'] = 'any'
 
   spec.files = `git ls-files`.split($/)
   spec.executables = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
