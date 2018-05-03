@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+require 'chef/node/attribute'
 require 'chef/mixin/deep_merge'
 
 require 'poise_derived/lazy_attribute'
@@ -50,6 +51,10 @@ module PoiseDerived
       # one since everything in Chef calls these as module methods.
       Chef::Mixin::DeepMerge.prepend(self)
       Chef::Mixin::DeepMerge.singleton_class.prepend(self)
+
+      # Later versions of Chef implement these directly in the Chef::Node::Attribute
+      # class, so patch those too if needed.
+      Chef::Node::Attribute.prepend(self) if Chef::Node::Attribute.private_instance_methods(false).include?(:deep_merge!)
     end
   end
 end
